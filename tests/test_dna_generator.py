@@ -1,28 +1,24 @@
-import random as R
-
+import pytest
 from app.services.dna_generator import generate_dna_sequence
 
-
-def original_generation_function(id: int, region: str, age: int, dna_seed: str) -> str:
-    # ... [paste the original slow implementation here] ...
-
 def test_sequence_consistency():
-    test_params = (1, "apac", 50, "agtc"*100)
-    
-    # Original implementation
-    R.seed(f"{test_params[0]}+{test_params[1]}+{test_params[2]}")
-    original = original_generation_function(*test_params)
-    
-    # Optimized implementation
-    optimized = generate_dna_sequence(*test_params)
-    
-    # Check first 1000 characters match
-    assert original[:1000] == optimized[:1000], "First 1000 characters mismatch"
-    
-    # Check total length matches
-    assert len(original) == len(optimized), "Length mismatch"
-    
-    print("Consistency test passed!")
+    """
+    Given the same seed and parameters, generate_dna_sequence
+    should return identical sequences every time and length == 1000.
+    """
+    seed = "agtc"  # a valid motif part of Q['apac']
+    seq1 = generate_dna_sequence(id="id_0001", region="apac", age=30, dna_seed=seed)
+    seq2 = generate_dna_sequence(id="id_0001", region="apac", age=30, dna_seed=seed)
 
-if __name__ == "__main__":
-    test_sequence_consistency()
+    # They must be the same (deterministic given the seed)
+    assert seq1 == seq2
+    # And should be exactly 1000 characters long
+    assert isinstance(seq1, str) and len(seq1) == 1000
+
+def test_invalid_seed_returns_invalid_seed():
+    """
+    If the seed contains no valid motifs, the function should return "invalid_seed".
+    """
+    bad_seed = "xxxx"  # not in any Q motifs
+    result = generate_dna_sequence(id="id_0002", region="na", age=25, dna_seed=bad_seed)
+    assert result == "invalid_seed"
