@@ -17,7 +17,7 @@ async def upload_csv(file: UploadFile = File(...)):
         # Generate unique filename with original extension
         file_id = str(uuid.uuid4())
         original_ext = os.path.splitext(file.filename)[1]
-        file_path = f"uploads/{file_id}{original_ext}"
+        file_path = f"app/storage/uploads/{file_id}{original_ext}"
 
         if file.content_type not in ["text/csv", "application/vnd.ms-excel"]:
             raise HTTPException(400, "Only CSV files are allowed")
@@ -81,7 +81,7 @@ async def upload_csv(file: UploadFile = File(...)):
             )
 
         # Store data (replace with database logic)
-        processed_path = f"processed/{file_id}.parquet"
+        processed_path = f"app/storage/processed/{file_id}.parquet"
         df.to_parquet(processed_path)
 
         return {"message": f"Processed {len(df)} records", "file_id": file_id}

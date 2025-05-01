@@ -55,6 +55,7 @@ cache/
 .pytest_cache/
 cover/
 researchVenv/
+processed
 
 
 # Translations
@@ -175,5 +176,7 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
-#file uploads folder
-uploads/
+#file uploads folder and processed folder
+uploads
+processed
+storage/*
