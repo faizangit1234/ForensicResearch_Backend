@@ -30,7 +30,7 @@ def configure_gemini(api_key: str):
             raise RuntimeError("No supported Gemini model found.")
 
         os.environ["GEMINI_MODEL"] = selected_model
-        logger.info(f"✅ Gemini model configured: {selected_model}")
+        logger.info(f" Gemini model configured: {selected_model}")
         return selected_model
 
     except InvalidArgument:
