@@ -1,3 +1,4 @@
+# optimised for api endpoint
 import hashlib
 import random as R
 

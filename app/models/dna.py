@@ -1,5 +1,5 @@
 # Using Pydantic for data validation and serialization of request/response models
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 # Response schema for returning a DNA sample’s metadata and sequence
@@ -28,5 +28,10 @@ class CompareRequest(BaseModel):
 
 
 class AskRequest(BaseModel):
-    # User’s natural-language query text
-    question: str
+    question: str = Field(
+        ...,
+        min_length=20,
+        max_length=1000,
+        example="How to differentiate degradation from inhibition in PCR?",
+        description="Forensic DNA analysis question requiring expert evaluation",
+    )

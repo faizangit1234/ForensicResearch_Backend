@@ -36,17 +36,38 @@ def make_cache_key(record: dict) -> str:
 @router.get(
     "/generate-sequence/{sample_id}",
     response_model=DNASequenceResponse,
+    tags=["Generate"],
+    summary="Get DNA sequence with metadata",
+    description="""Generates or retrieves cached DNA sequence for a sample with detailed metadata.
+Implements SHA-256 based caching for identical requests within 24 hours.
+    
+Typical Use Cases:
+- API integrations requiring structured data
+- Web applications displaying sequence metadata""",
     responses={
-        200: {"description": "Successfully generated DNA sequence"},
-        400: {"description": "Invalid record data"},
-        404: {"description": "Sample ID not found"},
+        200: {
+            "description": "Successfully returned DNA sequence",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "dna_sequence": "AGTCGATCG",
+                        "sample_id": "SAMP-12345",
+                        "region": "North America",
+                        "age": 42,
+                        "cached": False,
+                    }
+                }
+            },
+        },
+        400: {"description": "Invalid request parameters"},
+        404: {"description": "Sample not found in database"},
         500: {"description": "Internal server error"},
     },
     operation_id="generate_sequence",
 )
 def generate_sequence(sample_id: str):
     """
-    Generate DNA sequence for a given sample ID with proper error handling
+    Generate DNA sequence for a given sample ID
     """
     try:
         # Attempt to retrieve the record
@@ -102,16 +123,33 @@ def generate_sequence(sample_id: str):
 
 @router.get(
     "/generate-sequence-stream/{sample_id}",
-    operation_id="generate_sequence_stream",
-    response_class=StreamingResponse,
+    tags=["Generate"],
+    summary="Stream raw DNA sequence",
+    description="""Directly streams DNA sequence as plain text with download headers.
+    
+Typical Use Cases:
+- Laboratory equipment integration
+- Bulk sequence downloads
+- Real-time processing pipelines""",
     responses={
         200: {
-            "content": {"text/plain": {}},
-            "description": "Streaming DNA sequence",
+            "description": "Successfully initiated stream",
+            "content": {"text/plain": {"example": "AGTCGATCG"}},
+            "headers": {
+                "Content-Disposition": {
+                    "description": "Download filename",
+                    "schema": {"type": "string"},
+                },
+                "X-Content-Type-Options": {
+                    "description": "Security header",
+                    "schema": {"type": "string"},
+                },
+            },
         },
         404: {"description": "Sample not found"},
-        500: {"description": "Internal server error"},
+        500: {"description": "Sequence generation failed"},
     },
+    operation_id="generate_sequence_stream",
 )
 async def generate_sequence(sample_id: str):
     try:

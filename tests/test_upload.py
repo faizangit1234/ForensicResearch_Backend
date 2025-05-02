@@ -1,5 +1,6 @@
 import io
 
+
 def test_upload_csv_success(client):
     data = {"file": ("test.csv", "id,region,age,seed\n3,emea,40,aagt", "text/csv")}
     response = client.post("/upload-csv/", files=data)
@@ -7,10 +8,12 @@ def test_upload_csv_success(client):
     body = response.json()
     assert "message" in body and "Processed 1 records" in body["message"]
 
+
 def test_upload_csv_wrong_type(client):
     data = {"file": ("test.txt", "hello", "text/plain")}
     res = client.post("/upload-csv/", files=data)
     assert res.status_code == 400
+
 
 def test_upload_csv_oversize(client, monkeypatch):
     # generate >5MB of "a"
