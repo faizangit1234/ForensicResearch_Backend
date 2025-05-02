@@ -111,7 +111,46 @@ End with: "Faizan Farooq's Forensic AI concludes service - Verify through tradit
 Now process the following forensic inquiry:"""
 
 
-@router.post("/ask-me-anything/")
+@router.post(
+    "/ask-me-anything/",
+    tags=["Ask"],
+    summary="Forensic DNA Expert Analysis",
+    description="""Provides advanced forensic DNA analysis using Gemini 1.5 Pro AI model with domain-specific expertise.
+    
+System Capabilities:
+- STR analysis and mixture deconvolution
+- Bayesian statistical calculations
+- Ethical/legal compliance guidance
+- Emerging technology integration
+- Technical troubleshooting
+
+Response Structure:
+1. Technical Answer
+2. Statistical Certainty (1-5 scale)
+3. Recommended Actions
+4. Ethical Considerations
+5. Educational Resources
+
+Safety Protocols:
+- Temperature: 0.3 (precision-focused)
+- Safety filters disabled for forensic integrity
+- Mandatory disclaimer in responses""",
+    responses={
+        200: {
+            "content": {
+                "application/json": {
+                    "example": {
+                        "answer": "GeminiDNA Analysis Initialized\n1. Technical Answer...",
+                        "system": "GeminiDNA v2.1 - Developed by Faizan Farooq",
+                        "disclaimer": "Investigational use only - Must verify results with wet-lab testing",
+                    }
+                }
+            }
+        },
+        502: {"description": "AI service unavailable"},
+        500: {"description": "Analysis system failure"},
+    },
+)
 async def ask_question(payload: AskRequest):
     try:
         # (Removed `if not genai.api_key` check)

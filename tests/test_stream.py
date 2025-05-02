@@ -4,6 +4,7 @@ def test_generate_sequence_stream_success(client):
     text = res.text
     assert len(text) > 0  # got some sequence
 
+
 def test_generate_sequence_stream_not_found(client):
     res = client.get("/generate-sequence-stream/999")
     assert res.status_code == 404

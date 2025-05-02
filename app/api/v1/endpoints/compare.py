@@ -11,7 +11,38 @@ router = APIRouter()
 logger = logging.getLogger(__name__)
 
 
-@router.post("/compare-sequences/")
+@router.post(
+    "/compare-sequences/",
+    tags=["Compare"],
+    summary="Compare DNA sequences",
+    description="""Compares two DNA sequences using hybrid Jaccard-Needleman-Wunsch algorithm.
+    
+Process Flow:
+1. Validate both sample IDs exist in database
+2. Generate sequences for both samples
+3. Calculate hybrid similarity score
+4. Return comparison metrics
+
+Technical Note:
+- Sequence generation follows same logic as /generate-sequence endpoint
+- Scores range from 0.0 (no match) to 1.0 (perfect match)""",
+    responses={
+        200: {
+            "description": "Comparison results",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "similarity_score": 0.82,
+                        "comparison_method": "hybrid_jaccard_nw",
+                    }
+                }
+            },
+        },
+        400: {"description": "Invalid input format"},
+        404: {"description": "One or both samples not found"},
+        500: {"description": "Comparison computation failed"},
+    },
+)
 def compare_sequences(payload: CompareRequest):
     try:
         # Existing record validation

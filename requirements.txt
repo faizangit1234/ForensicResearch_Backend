@@ -50,3 +50,5 @@ uvicorn==0.34.2
 pytest
 httpx
 pyarrow
+isort
+black

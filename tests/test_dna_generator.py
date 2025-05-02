@@ -1,5 +1,7 @@
 import pytest
+
 from app.services.dna_generator import generate_dna_sequence
+
 
 def test_sequence_consistency():
     """
@@ -14,6 +16,7 @@ def test_sequence_consistency():
     assert seq1 == seq2
     # And should be exactly 1000 characters long
     assert isinstance(seq1, str) and len(seq1) == 1000
+
 
 def test_invalid_seed_returns_invalid_seed():
     """

@@ -1,3 +1,4 @@
+# optimised for api endpoint
 import hashlib
 import random as R
 
@@ -40,6 +41,8 @@ def generate_dna_sequence(id: str, region: str, age: int, dna_seed: str) -> str:
     return "".join(sequence)[:target_length]
 
 
+
+#For future refrence , requires good specs machine
 # import random as R
 # import hashlib
 # from functools import lru_cache
