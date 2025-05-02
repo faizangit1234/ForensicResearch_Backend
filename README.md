@@ -148,6 +148,8 @@ forensic-research-api/
 
 
 ## 🤝 Contributing
+### We ❤️ contributions of any kind! Whether it’s a bug report, a new feature, or just a typo fix, your help makes Explorer API better. Here’s how you can get involved:
+
 1. Fork the repository
 
 2. Create your feature branch:
@@ -171,12 +173,13 @@ Distributed under the MIT License. See LICENSE for more information.
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
 
-## Love this project? If you found Explorer API helpful, please ⭐ star the repository on GitHub!
+### Love this project? If you found Explorer API helpful, please ⭐ star the repository on GitHub!
 Your support helps me keep improving features, writing docs, and fixing bugs. Thank you!
 
 
-### Made with ❤️ by dev Faizan Farooq | API Reference 
+## Made with ❤️ by dev Faizan Farooq | 
 
+ * API Reference 
  https://forensicresearch-backend.onrender.com/docs
 
 
