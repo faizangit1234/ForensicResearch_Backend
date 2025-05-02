@@ -30,7 +30,7 @@ class CompareRequest(BaseModel):
 class AskRequest(BaseModel):
     question: str = Field(
         ...,
-        min_length=20,
+        min_length=2,
         max_length=1000,
         example="How to differentiate degradation from inhibition in PCR?",
         description="Forensic DNA analysis question requiring expert evaluation",
